@@ -1,0 +1,103 @@
+/*!
+ * Name: SimplestWebSlides
+ * Version: 1.0.0
+ * Date: 2021-12-30
+ * Description: This was WebSlides, but it has been *super* stripped down for
+ *              learning purposes, any beauty is due to them, any ugliness is
+ *              due to me @KoviRobi
+ * URL: https://github.com/webslides/webslides#readme
+ * Credits: @jlantunez, @LuisSacristan, @Belelros, @KoviRobi
+ */
+@charset "UTF-8";
+
+body {
+  line-height: 1;
+  text-rendering: optimizeLegibility;
+  font-family: "Noto Sans", sans-serif;
+  font-size: 3.6vh;
+}
+
+/* For some reason these don't scale, at least in Firefox 95.0.2 */
+input,
+select {
+  font-size: 1rem;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 2rem;
+  break-after: always;
+  position: relative;
+  word-wrap: break-word;
+}
+
+section:first-child {
+  margin-top: 0;
+}
+
+section:last-child {
+  margin-bottom: 0;
+}
+
+.nav {
+  margin: auto auto 0.5rem;
+}
+
+.nav a {
+  margin: 0 1rem;
+  color: grey;
+  font-weight: bold;
+}
+
+.nav a[href] {
+  color: black;
+  text-decoration: none;
+}
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th,
+td {
+  padding: 0.7rem 1.4rem;
+  text-align: left;
+}
+
+th.right,
+td.right {
+  text-align: right;
+}
+
+th {
+  font-weight: bold;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+td[colspan] {
+  text-align: center;
+}
+
+td,
+th {
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+thead {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+tr:nth-child(even) > td {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+tr > td {
+  border-top: 1px solid rgba(0, 0, 0, 0.5);
+}

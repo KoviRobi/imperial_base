@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Imperial Base</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" media="all" href="slides.css" />
+  </head>
+  <body>
+    <section id="title">
+      <h1>Imperial Base</h1>
+      <h2>Envious of metric systems?</h2>
+      <p>
+        In the metric system you can just say 1000m = 1km and so on. Did you
+        know that this is actually because the decimal notation is rigged in the
+        metric system's favour!
+      </p>
+    </section>
+
+    <section id="inches">
+      <h2>Introducing Imperial Base (inches)</h2>
+      <p>
+        Time to use a number base that's rigged for imperial. Let inches be the
+        1 in our system. Inches subdivide into sixteenths, so anything after the
+        inch symbol is going to be base 16 (0-9 plus A-F)
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="right">Value</th>
+            <th>Written as</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="right"><sup>3</sup>/<sub>16</sub> inch</td>
+            <td>0&Prime;3</td>
+          </tr>
+          <tr>
+            <td class="right"><sup>15</sup>/<sub>16</sub> inch</td>
+            <td>0&Prime;F</td>
+          </tr>
+          <tr>
+            <td class="right"><sup>17</sup>/<sub>256</sub> inch</td>
+            <td>0&Prime;11</td>
+          </tr>
+          <tr>
+            <td class="right"><sup>255</sup>/<sub>256</sub> inch</td>
+            <td>0&Prime;FF</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Note, that the inch symbol (double prime: &Prime;) serves as a kind of
+        decimal point. But of course, not decimal because that's base 10. And
+        the same way each digit after a decimal point is multiplied by 10<sup
+          >-1</sup
+        >
+        (or <sup>1</sup>/<sub>10</sub>), 10<sup>-2</sup> (or
+        <sup>1</sup>/<sub>100</sub>), 10<sup>-3</sup> and so on.
+      </p>
+    </section>
+
+    <section id="feet">
+      <h2>Introducing Imperial Base (feet)</h2>
+      <p>
+        Moving onto feet, there is 12 inches in one feet, so the inches digit is
+        going to be base 12 (0-9 plus A, B).
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="right">Value</th>
+            <th>Written as</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="right">12 inches</td>
+            <td>10&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">15 inches</td>
+            <td>13&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">35 inches</td>
+            <td>2B&Prime;</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Note that 13&Prime; is not a valid representation. It is a valid value,
+        but it is represented as 11&Prime; (1 feet and 1 inch). And inches go up
+        to B not up to 9, so your digits are 0123456789AB.
+      </p>
+    </section>
+
+    <section id="yards">
+      <h2>Introducing Imperial Base (yards)</h2>
+      <p>And onto yards, made up by three feet, so it is base 3 (0-2).</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="right">Value</th>
+            <th>Written as</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="right">37 inches</td>
+            <td>101&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">4 feet</td>
+            <td>110&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">5 feet</td>
+            <td>120&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">6 feet</td>
+            <td>200&Prime;</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Again, note that 30&Prime; is not a valid representation. It is a valid
+        value of three feet, but it is represented as 100&Prime; (1 yard). And
+        yards go up only to 2 not up to 9, so your digits are 012.
+      </p>
+    </section>
+
+    <section id="miles">
+      <h2>Introducing Imperial Base (miles)</h2>
+      <p>
+        Miles are a pain, because 1760 yards make up one mile. We don't have
+        that many choices for digits, but fortunately 1760 factors into
+        11&times;16&times;10, so it is going to be three different types of
+        digits, base 10 on the right, base 16 in the middle, and base 11 on the
+        left.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="right">Value</th>
+            <th>Written as</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="right">1 mile minus 1 inch</td>
+            <td>AF, 92B&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">1 mile plus 1 inch</td>
+            <td>100, 001&Prime;</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="many-miles">
+      <h2>Introducing Imperial Base (lots of miles)</h2>
+      <p>
+        Miles then could just be represented in base 10, but that feels too
+        metric. So how about base 36, that combines the base 12 of inches and
+        the base 3 of feet, and can be represented using all the numbers and
+        letters (0-9 plus A-Z).
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="right">Value</th>
+            <th>Written as</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="right">40, 450 yards</td>
+            <td>MAD, 000&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">28, 101 miles</td>
+            <td>LOL00, 000&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">
+              Earth's equatorial circumference (24,901.461 miles)
+            </td>
+            <td>J7, P51, 110&Prime;F5C29</td>
+          </tr>
+          <tr>
+            <td class="right">
+              Earth's polar circumference (24,859.734 miles)
+            </td>
+            <td>J6J81126&Prime;3D70A</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="calculator">
+      <h2>Calculator</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="right">Value</th>
+            <th>Written as</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="right">
+              36 miles minus <sup>17</sup>/<sub>256</sub> inch
+            </td>
+            <td>ZAF, 92B&Prime;EF</td>
+          </tr>
+
+          <tr class="calculator">
+            <td class="right">
+              <input
+                type="text"
+                id="decimal-0"
+                name="decimal-0"
+                placeholder="12.34375"
+              />
+              <select name="unit-0" id="unit-0">
+                <option value="inches">Inches</option>
+                <option value="feet">Feet</option>
+                <option value="yards">Yards</option>
+                <option value="miles">Miles</option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="imperial-0"
+                name="imperial-0"
+                placeholder='10"58'
+              />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="2">
+              <select name="operator" id="operator">
+                <option value="add">+</option>
+                <option value="sub">-</option>
+                <option value="mult">&times;</option>
+                <option value="div">&divide;</option>
+              </select>
+            </td>
+          </tr>
+
+          <tr class="calculator">
+            <td class="right">
+              <input
+                type="text"
+                id="decimal-1"
+                name="decimal-1"
+                placeholder="12.34375"
+              />
+              <select name="unit-1" id="unit-1">
+                <option value="inches">Inches</option>
+                <option value="feet">Feet</option>
+                <option value="yards">Yards</option>
+                <option value="miles">Miles</option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="imperial-1"
+                name="imperial-1"
+                placeholder='10"58'
+              />
+            </td>
+          </tr>
+
+          <tr class="calculator">
+            <td class="right">
+              <input
+                type="text"
+                id="decimal-2"
+                name="decimal-2"
+                placeholder="12.34375"
+              />
+              <select name="unit-2" id="unit-2">
+                <option value="inches">Inches</option>
+                <option value="feet">Feet</option>
+                <option value="yards">Yards</option>
+                <option value="miles">Miles</option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="text"
+                id="imperial-2"
+                name="imperial-2"
+                placeholder='10"58'
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        Note, multiplication and division might not make sense, in that because
+        the result is in a different unit, it would need its own number system,
+        say Imperial<sup>2</sup> Base. This only applies when you are
+        multiplying two dimensions together, multiplying a dimension by a scalar
+        makes sense (in which case units should be left as inches for the
+        scalar).
+      </p>
+    </section>
+
+    <script src="slides.js"></script>
+    <script src="imperial_base.js"></script>
+  </body>
+</html>
