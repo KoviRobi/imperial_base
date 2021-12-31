@@ -222,6 +222,7 @@ function update_decimal(i) {
   }
 }
 
+let last_changed_group = 0;
 const last_changed = [, ,];
 const imperial_inputs = [, ,];
 const decimal_inputs = [, ,];
@@ -248,6 +249,7 @@ for (let i = 0; i < 3; i++) {
   imperial_inputs[i].addEventListener(
     "input",
     () => {
+      last_changed_group = i;
       last_changed[i] = imperial_inputs[i];
       imperial_inputs[i].recalculate();
       perform_calculation[i]();
@@ -261,6 +263,7 @@ for (let i = 0; i < 3; i++) {
   decimal_inputs[i].addEventListener(
     "input",
     () => {
+      last_changed_group = i;
       last_changed[i] = decimal_inputs[i];
       decimal_inputs[i].recalculate();
       perform_calculation[i]();
@@ -297,3 +300,9 @@ perform_calculation[2] = () => {
   last_changed[0].set(reverse_operator_map[operator.value](b, c));
   last_changed[0].recalculate();
 };
+
+operator.addEventListener(
+  "change",
+  () => perform_calculation[last_changed_group](),
+  false
+);
