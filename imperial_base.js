@@ -46,9 +46,12 @@ function group_digits(chars) {
   return ret;
 }
 
-function pretty_print_number(number, base) {
+function pretty_print_number(number, base, decimal_places) {
   if (base === undefined) base = 10;
   let [whole, fractional = []] = number.toString(base).split(".");
+  if (decimal_places !== undefined)
+    // This is truncate rather than round but is easier to implement
+    fractional = fractional.slice(0, decimal_places);
   let pretty = group_digits(whole).join("");
   if (fractional.length > 0) {
     pretty += "." + group_digits_reverse(fractional).join("");
@@ -98,8 +101,11 @@ function parse_imperial(input_string) {
   return [whole, fractional];
 }
 
-function to_string_imperial(imperial) {
+function to_string_imperial(imperial, decimal_places) {
   let [whole, fractional] = imperial;
+  if (decimal_places !== undefined)
+    // This is truncate rather than round but is easier to implement
+    fractional = fractional.slice(0, decimal_places);
   fractional = fractional.map((digit) => digit.toString(16).toUpperCase());
   whole = whole.map(to_string_imperial_whole);
   return (
@@ -185,7 +191,7 @@ function get_decimal_inches(i) {
 
 function set_imperial_inches(i, inches) {
   imperial = inches_to_imperial(inches);
-  imperial_inputs[i].value = to_string_imperial(imperial);
+  imperial_inputs[i].value = to_string_imperial(imperial, 5);
 }
 
 function update_imperial(i) {
@@ -206,7 +212,9 @@ function get_imperial_inches(i) {
 
 function set_decimal_inches(i, inches) {
   decimal_inputs[i].value = pretty_print_number(
-    to_unit(inches, unit_inputs[i].value)
+    to_unit(inches, unit_inputs[i].value),
+    10,
+    5
   );
 }
 

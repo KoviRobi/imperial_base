@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌑</text></svg>">
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌑</text></svg>"
+    />
     <title>Imperial Base</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" media="all" href="slides.css" />
@@ -17,8 +20,8 @@
       </p>
     </section>
 
-    <section id="inches">
-      <h2>Introducing Imperial Base (inches)</h2>
+    <section id="fractional-inches">
+      <h2>Introducing Imperial Base (fractions of inches)</h2>
       <p>
         Time to use a number base that's rigged for imperial. Let inches be the
         1 in our system. Inches subdivide into sixteenths, so anything after the
@@ -63,11 +66,11 @@
       </p>
     </section>
 
-    <section id="feet">
-      <h2>Introducing Imperial Base (feet)</h2>
+    <section id="inches">
+      <h2>Introducing Imperial Base (inches)</h2>
       <p>
-        Moving onto feet, there is 12 inches in one feet, so the inches digit is
-        going to be base 12 (0-9 plus A, B).
+        Moving onto whole inches, there is 12 inches in one feet, so the inches
+        digit is going to be base 12 (0-9 plus A, B).
       </p>
 
       <table>
@@ -100,9 +103,9 @@
       </p>
     </section>
 
-    <section id="yards">
-      <h2>Introducing Imperial Base (yards)</h2>
-      <p>And onto yards, made up by three feet, so it is base 3 (0-2).</p>
+    <section id="feet">
+      <h2>Introducing Imperial Base (feet)</h2>
+      <p>And three feet make one yard, so this digit is base 3 (0-2).</p>
 
       <table>
         <thead>
@@ -131,21 +134,16 @@
         </tbody>
       </table>
 
-      <p>
-        Again, note that 30&Prime; is not a valid representation. It is a valid
-        value of three feet, but it is represented as 100&Prime; (1 yard). And
-        yards go up only to 2 not up to 9, so your digits are 012.
-      </p>
+      <p>Again, note that 30&Prime; is not a valid representation.</p>
     </section>
 
-    <section id="miles">
-      <h2>Introducing Imperial Base (miles)</h2>
+    <section id="yards">
+      <h2>Introducing Imperial Base (yards)</h2>
       <p>
-        Miles are a pain, because 1760 yards make up one mile. We don't have
-        that many choices for digits, but fortunately 1760 factors into
-        11&times;16&times;10, so it is going to be three different types of
-        digits, base 10 on the right, base 16 in the middle, and base 11 on the
-        left.
+        Next 1760 yards make up one mile. We don't have that many choices for
+        digits, but fortunately 1760 factors into 11&times;16&times;10, so it is
+        going to be three different types of digits, base 10 on the right, base
+        16 in the middle, and base 11 on the left.
       </p>
 
       <table>
@@ -168,8 +166,8 @@
       </table>
     </section>
 
-    <section id="many-miles">
-      <h2>Introducing Imperial Base (lots of miles)</h2>
+    <section id="miles">
+      <h2>Introducing Imperial Base (miles)</h2>
       <p>
         Miles then could just be represented in base 10, but that feels too
         metric. So how about base 36, that combines the base 12 of inches and
@@ -236,10 +234,10 @@
                 placeholder="12.34375"
               />
               <select name="unit-0" id="unit-0">
-                <option value="inches">Inches</option>
-                <option value="feet">Feet</option>
-                <option value="yards">Yards</option>
-                <option value="miles">Miles</option>
+                <option value="inches">In</option>
+                <option value="feet">Ft</option>
+                <option value="yards">Yd</option>
+                <option value="miles">Mi</option>
               </select>
             </td>
             <td>
@@ -272,10 +270,10 @@
                 placeholder="12.34375"
               />
               <select name="unit-1" id="unit-1">
-                <option value="inches">Inches</option>
-                <option value="feet">Feet</option>
-                <option value="yards">Yards</option>
-                <option value="miles">Miles</option>
+                <option value="inches">In</option>
+                <option value="feet">Ft</option>
+                <option value="yards">Yd</option>
+                <option value="miles">Mi</option>
               </select>
             </td>
             <td>
@@ -301,10 +299,10 @@
                 placeholder="12.34375"
               />
               <select name="unit-2" id="unit-2">
-                <option value="inches">Inches</option>
-                <option value="feet">Feet</option>
-                <option value="yards">Yards</option>
-                <option value="miles">Miles</option>
+                <option value="inches">In</option>
+                <option value="feet">Ft</option>
+                <option value="yards">Yd</option>
+                <option value="miles">Mi</option>
               </select>
             </td>
             <td>
@@ -322,10 +320,9 @@
       <p>
         Note, multiplication and division might not make sense, in that because
         the result is in a different unit, it would need its own number system,
-        say Imperial² Base. This only applies when you are
-        multiplying two dimensions together, multiplying a dimension by a scalar
-        makes sense (in which case units should be left as inches for the
-        scalar).
+        say Imperial² Base. This only applies when you are multiplying two
+        dimensions together, multiplying a dimension by a scalar makes sense (in
+        which case units should be left as inches for the scalar).
       </p>
     </section>
 
