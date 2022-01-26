@@ -63,13 +63,17 @@ function group_digits(chars) {
 
 function pretty_print_number(number, base, decimal_places) {
   if (base === undefined) base = 10;
-  let [whole, fractional = []] = number.toString(base).split(".");
+  let [mantissa, exponent = []] = number.toString(base).split("e");
+  let [whole, fractional = []] = mantissa.split(".");
   if (decimal_places !== undefined)
     // This is truncate rather than round but is easier to implement
     fractional = fractional.slice(0, decimal_places);
   let pretty = group_digits(whole).join("");
   if (fractional.length > 0) {
     pretty += "." + group_digits_reverse(fractional).join("");
+  }
+  if (exponent.length > 0) {
+    pretty += " e" + group_digits(exponent).join("");
   }
   return pretty;
 }
