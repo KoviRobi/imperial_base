@@ -106,7 +106,9 @@ function to_string_imperial_whole(digit, index) {
 }
 
 function parse_imperial(input_string) {
-  let [whole, fractional = ""] = sanitize_imperial(input_string).split('"');
+  let pos = input_string.startsWith("+") || !input_string.startsWith("-");
+  let abs = sanitize_imperial(input_string).replace(/^[+-]/, "");
+  let [whole, fractional = ""] = abs.split('"');
 
   fractional = Array.from(fractional, (c) =>
     parse_digit(c, imperial_base.fractional)
@@ -114,11 +116,11 @@ function parse_imperial(input_string) {
 
   whole = Array.from(whole).reverse().map(parse_imperial_whole);
 
-  return [whole, fractional];
+  return [pos, whole, fractional];
 }
 
 function to_string_imperial(imperial, decimal_places) {
-  let [whole, fractional] = imperial;
+  let [pos, whole, fractional] = imperial;
   if (decimal_places !== undefined)
     // This is truncate rather than round but is easier to implement
     fractional = fractional.slice(0, decimal_places);
@@ -127,6 +129,7 @@ function to_string_imperial(imperial, decimal_places) {
   );
   whole = whole.map(to_string_imperial_whole);
   return (
+    (pos ? "" : "-") +
     group_digits_reverse(whole).reverse().join("") +
     "\u2033" +
     group_digits_reverse(fractional).join("")
@@ -143,19 +146,21 @@ function imperial_whole_to_inches(prev, digit, index) {
 }
 
 function imperial_to_inches(imperial) {
-  let [whole, fractional] = imperial;
+  let [pos, whole, fractional] = imperial;
   whole = whole.reduce(imperial_whole_to_inches, 0);
 
   let frac_reducer = (prev, digit, index) =>
     digit / imperial_base.fractional ** (index + 1) + prev;
   fractional = fractional.reduce(frac_reducer, 0);
 
-  return whole + fractional;
+  return (pos ? 1 : -1) * (whole + fractional);
 }
 
 function inches_to_imperial(inches) {
   if (Number.isNaN(inches) || !Number.isFinite(inches))
     throw new BadNumberException(inches);
+  let pos = inches >= 0;
+  inches = Math.abs(inches);
   let fractional_array = [];
   let fractional = inches % 1;
 
@@ -184,7 +189,7 @@ function inches_to_imperial(inches) {
     whole = Math.trunc(whole / base);
   }
 
-  return [whole_array, fractional_array];
+  return [pos, whole_array, fractional_array];
 }
 
 function to_unit(inches, unit) {
