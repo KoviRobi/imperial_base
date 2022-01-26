@@ -1,3 +1,13 @@
+const imperial_base = { fractional: 16, whole: [12, 3, 22, 10, 8], rest: 36 };
+const imperial_base_whole_units = [
+  { name: "inches", symbol: "in" },
+  { name: "feet", symbol: "ft" },
+  { name: "yards", symbol: "yd" },
+  { name: "chains", symbol: "ch" },
+  { name: "furlongs", symbol: "fu" },
+  { name: "miles", symbol: "mi" },
+];
+
 function BadCharException(char, base) {
   this.name = "BadCharException";
   this.message = `Bad character ${char} in base ${base}`;
@@ -6,6 +16,11 @@ function BadCharException(char, base) {
 function BadNumberException(number) {
   this.name = "BadNumberException";
   this.message = `Unable to parse number ${number}`;
+}
+
+function BadUnitException(unit) {
+  this.name = "BadUnitException";
+  this.message = `Unable to parse unit ${unit}`;
 }
 
 /** Remove spaces and comma digit grouping */
@@ -60,6 +75,7 @@ function pretty_print_number(number, base, decimal_places) {
 }
 
 function parse_digit(character, base) {
+  if (base === undefined) base = 10;
   let number_value;
   let lc = character.toLowerCase();
   if ("0" <= lc && lc <= "9") number_value = Number(character);
@@ -73,28 +89,24 @@ function parse_digit(character, base) {
 
 /** This function is mapped over the reversed char list */
 function parse_imperial_whole(char, index) {
-  if (index === 0) return parse_digit(char, 12);
-  else if (index === 1) return parse_digit(char, 3);
-  else if (index === 2) return parse_digit(char, 10);
-  else if (index === 3) return parse_digit(char, 16);
-  else if (index === 4) return parse_digit(char, 11);
-  else return parse_digit(char, 36);
+  if (0 <= index && index < imperial_base.whole.length)
+    return parse_digit(char, imperial_base.whole[index]);
+  else return parse_digit(char, imperial_base.rest);
 }
 
 /** This function is mapped over the reversed char list */
 function to_string_imperial_whole(digit, index) {
-  if (index === 0) return digit.toString(12).toUpperCase();
-  else if (index === 1) return digit.toString(3).toUpperCase();
-  else if (index === 2) return digit.toString(10).toUpperCase();
-  else if (index === 3) return digit.toString(16).toUpperCase();
-  else if (index === 4) return digit.toString(11).toUpperCase();
-  else return digit.toString(36).toUpperCase();
+  if (0 <= index && index < imperial_base.whole.length)
+    return digit.toString(imperial_base.whole[index]).toUpperCase();
+  else return digit.toString(imperial_base.rest).toUpperCase();
 }
 
 function parse_imperial(input_string) {
   let [whole, fractional = ""] = sanitize_imperial(input_string).split('"');
 
-  fractional = Array.from(fractional, (c) => parse_digit(c, 16));
+  fractional = Array.from(fractional, (c) =>
+    parse_digit(c, imperial_base.fractional)
+  );
 
   whole = Array.from(whole).reverse().map(parse_imperial_whole);
 
@@ -106,7 +118,9 @@ function to_string_imperial(imperial, decimal_places) {
   if (decimal_places !== undefined)
     // This is truncate rather than round but is easier to implement
     fractional = fractional.slice(0, decimal_places);
-  fractional = fractional.map((digit) => digit.toString(16).toUpperCase());
+  fractional = fractional.map((digit) =>
+    digit.toString(imperial_base.fractional).toUpperCase()
+  );
   whole = whole.map(to_string_imperial_whole);
   return (
     group_digits_reverse(whole).reverse().join("") +
@@ -117,12 +131,10 @@ function to_string_imperial(imperial, decimal_places) {
 
 /** This function is reduced over the reversed char list */
 function imperial_whole_to_inches(prev, digit, index) {
-  if (index >= 1) digit = digit * 12;
-  if (index >= 2) digit = digit * 3;
-  if (index >= 3) digit = digit * 10;
-  if (index >= 4) digit = digit * 16;
-  if (index >= 5) digit = digit * 11;
-  for (let i = index; i >= 6; i--) digit = digit * 36;
+  for (let i = 1; i <= Math.min(index, imperial_base.whole.length); i++)
+    digit = digit * imperial_base.whole[i - 1];
+  for (let i = index; i > imperial_base.whole.length; i--)
+    digit = digit * imperial_base.rest;
   return digit + prev;
 }
 
@@ -130,7 +142,8 @@ function imperial_to_inches(imperial) {
   let [whole, fractional] = imperial;
   whole = whole.reduce(imperial_whole_to_inches, 0);
 
-  let frac_reducer = (prev, digit, index) => digit / 16 ** (index + 1) + prev;
+  let frac_reducer = (prev, digit, index) =>
+    digit / imperial_base.fractional ** (index + 1) + prev;
   fractional = fractional.reduce(frac_reducer, 0);
 
   return whole + fractional;
@@ -145,7 +158,7 @@ function inches_to_imperial(inches) {
   // IEEE 754 double-precision has 52 bits of significand, which is 13 * 4 (a
   // hex digit is 4 bits), so truncate to 13 hex digits max
   for (let i = 0; i < 13 && Math.abs(fractional) > Number.EPSILON; i++) {
-    fractional = fractional * 16;
+    fractional = fractional * imperial_base.fractional;
     fractional_array.push(Math.trunc(fractional));
     fractional = fractional % 1;
   }
@@ -153,34 +166,51 @@ function inches_to_imperial(inches) {
   let whole_array = [];
   let whole = Math.trunc(inches);
 
-  for (const base of [12, 3, 10, 16, 11]) {
+  for (const base of imperial_base.whole) {
     if (whole === 0) break;
     let part = whole % base;
     whole_array.push(part);
     whole = Math.trunc(whole / base);
   }
 
+  base = imperial_base.rest;
   while (whole !== 0) {
-    let part = whole % 36;
+    let part = whole % base;
     whole_array.push(part);
-    whole = Math.trunc(whole / 36);
+    whole = Math.trunc(whole / base);
   }
 
   return [whole_array, fractional_array];
 }
 
 function to_unit(inches, unit) {
-  if (unit === "feet") return inches / 12;
-  else if (unit === "yards") return inches / 36;
-  else if (unit === "miles") return inches / 63360;
-  else return inches;
+  let matched = false;
+  for (let i = 0; i < imperial_base_whole_units.length; i++) {
+    if (imperial_base_whole_units[i].name === unit) {
+      matched = true;
+      break;
+    }
+    inches = inches / imperial_base.whole[i];
+  }
+
+  if (!matched) throw new BadUnitException(unit);
+
+  return inches;
 }
 
 function to_inches(value, unit) {
-  if (unit === "feet") return value * 12;
-  else if (unit === "yards") return value * 36;
-  else if (unit === "miles") return value * 63360;
-  else return value;
+  let matched = false;
+  for (let i = 0; i < imperial_base_whole_units.length; i++) {
+    if (imperial_base_whole_units[i].name === unit) {
+      matched = true;
+      break;
+    }
+    value = value * imperial_base.whole[i];
+  }
+
+  if (!matched) throw new BadUnitException(unit);
+
+  return value;
 }
 
 function get_decimal_inches(i) {
@@ -244,6 +274,13 @@ for (let i = 0; i < 3; i++) {
   unit_inputs[i] = document.getElementById(`unit-${i}`);
 
   last_changed[i] = imperial_inputs[i];
+
+  for (const unit of imperial_base_whole_units) {
+    option = document.createElement("option");
+    option.innerText = unit.symbol;
+    option.value = unit.name;
+    unit_inputs[i].append(option);
+  }
 
   unit_inputs[i].addEventListener(
     "change",

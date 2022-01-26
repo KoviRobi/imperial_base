@@ -15,17 +15,21 @@
   </head>
   <body>
     <section id="title">
-      <h1>Imperial Base</h1>
+      <h1>Imperial Base v2</h1>
       <h2>Envious of metric systems?</h2>
       <p>
         In the metric system you can just say 1000m = 1km and so on. Did you
         know that this is actually because the decimal notation is rigged in the
         metric system's favour!
       </p>
+      <p>
+        Version 2 introduces chains and furlongs instead of factoring one mile
+        as 11&times;16&times;10.
+      </p>
     </section>
 
     <section id="fractional-inches">
-      <h2>Introducing Imperial Base (fractions of inches)</h2>
+      <h2>Introducing Imperial Base v2 (fractions of inches)</h2>
       <p>
         Time to use a number base that's rigged for imperial. Let inches be the
         1 in our system. Inches subdivide into sixteenths, so anything after the
@@ -71,7 +75,7 @@
     </section>
 
     <section id="inches">
-      <h2>Introducing Imperial Base (inches)</h2>
+      <h2>Introducing Imperial Base v2 (inches)</h2>
       <p>
         Moving onto whole inches, there is 12 inches in one feet, so the inches
         digit is going to be base 12 (0-9 plus A, B).
@@ -108,7 +112,7 @@
     </section>
 
     <section id="feet">
-      <h2>Introducing Imperial Base (feet)</h2>
+      <h2>Introducing Imperial Base v2 (feet)</h2>
       <p>And three feet make one yard, so this digit is base 3 (0-2).</p>
 
       <table>
@@ -142,12 +146,13 @@
     </section>
 
     <section id="yards">
-      <h2>Introducing Imperial Base (yards)</h2>
+      <h2>Introducing Imperial Base v2 (yards)</h2>
       <p>
         Next 1760 yards make up one mile. We don't have that many choices for
-        digits, but fortunately 1760 factors into 11&times;16&times;10, so it is
-        going to be three different types of digits, base 10 on the right, base
-        16 in the middle, and base 11 on the left.
+        digits, but fortunately 22 yards also make up one chain! How convenient
+        this imperial system is, we happen to have 22 digits in the form of 0-9
+        then A-L! 22 yards in a chain 10 chains in a furlong 8 furlongs in a
+        mile
       </p>
 
       <table>
@@ -159,8 +164,62 @@
         </thead>
         <tbody>
           <tr>
+            <td class="right">1 chain</td>
+            <td>1 000&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">23 yards</td>
+            <td>1 100&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">2 chains</td>
+            <td>2 000&Prime;</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="chains">
+      <h2>Introducing Imperial Base v2 (chains)</h2>
+      <p>
+        Then 10 chains make up one furlong. What's that, base 10? Feels weird.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="right">Value</th>
+            <th>Written as</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="right">1 furlong</td>
+            <td>10 000&Prime;</td>
+          </tr>
+          <tr>
+            <td class="right">1 furlong minus 1 chain</td>
+            <td>9 000&Prime;</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="furlongs">
+      <h2>Introducing Imperial Base (furlongs)</h2>
+      <p>Then 8 furlongs make up a mile!</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th class="right">Value</th>
+            <th>Written as</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
             <td class="right">1 mile minus 1 inch</td>
-            <td>AF 92B&Prime;</td>
+            <td>79 L2B&Prime;</td>
           </tr>
           <tr>
             <td class="right">1 mile plus 1 inch</td>
@@ -199,13 +258,13 @@
             <td class="right">
               Earth's equatorial circumference (24,901.461 miles)
             </td>
-            <td>J7 P51 110&Prime;F5C 29</td>
+            <td>J7 P36 J10&Prime;F5C 29</td>
           </tr>
           <tr>
             <td class="right">
               Earth's polar circumference (24,859.734 miles)
             </td>
-            <td>J6 J81 126&Prime;3D7 0A4</td>
+            <td>J6 J58 F26&Prime;3D7 0A4</td>
           </tr>
         </tbody>
       </table>
@@ -237,12 +296,7 @@
                 name="decimal-0"
                 placeholder="12.34375"
               />
-              <select name="unit-0" id="unit-0">
-                <option value="inches">in</option>
-                <option value="feet">ft</option>
-                <option value="yards">yd</option>
-                <option value="miles">mi</option>
-              </select>
+              <select name="unit-0" id="unit-0"></select>
             </td>
             <td>
               <input
@@ -273,12 +327,7 @@
                 name="decimal-1"
                 placeholder="12.34375"
               />
-              <select name="unit-1" id="unit-1">
-                <option value="inches">in</option>
-                <option value="feet">ft</option>
-                <option value="yards">yd</option>
-                <option value="miles">mi</option>
-              </select>
+              <select name="unit-1" id="unit-1"></select>
             </td>
             <td>
               <input
@@ -302,12 +351,7 @@
                 name="decimal-2"
                 placeholder="12.34375"
               />
-              <select name="unit-2" id="unit-2">
-                <option value="inches">in</option>
-                <option value="feet">ft</option>
-                <option value="yards">yd</option>
-                <option value="miles">mi</option>
-              </select>
+              <select name="unit-2" id="unit-2"></select>
             </td>
             <td>
               <input
